@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>层级连连看</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .controls {
+            display: none; /* 初始隐藏控制按钮 */
+        }
+        .controls.show {
+            display: flex;
+            margin: 20px;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>层级连连看</h1>
+    <div class="controls" id="controls">
+        <button class="difficulty-btn easy" onclick="setDifficulty('easy')">简单</button>
+        <button class="difficulty-btn normal active" onclick="setDifficulty('normal')">普通</button>
+        <button class="difficulty-btn hard" onclick="setDifficulty('hard')">困难</button>
+    </div>
+    <canvas id="gameCanvas" width="480" height="480"></canvas>
+    <script src="game.js"></script>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const game = new LianLianKan(canvas);
+        const controls = document.getElementById('controls');
+        
+        function setDifficulty(level) {
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.${level}`).classList.add('active');
+            game.setDifficulty(level);
+        }
+        
+        // 当游戏开始时显示控制按钮
+        game.onGameStart = () => {
+            controls.classList.add('show');
+        };
+    </script>
+</body>
+</html> 
